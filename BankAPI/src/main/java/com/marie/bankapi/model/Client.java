@@ -1,16 +1,24 @@
 package com.marie.bankapi.model;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author Marie Jeanne NATETE
  */
-public class Client {
+@Entity
+public class Client implements Serializable {
 
-    private final Long id;
+    @Id
+    private  Long id;
     private String firstName;
     private String lastName;
+
+    public Client() {
+    }
 
     public Client(Long id, String firstName, String lastName) {
         this.id = id;
@@ -28,6 +36,10 @@ public class Client {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setFirstName(String firstName) {
