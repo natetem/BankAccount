@@ -21,14 +21,18 @@ public class ClientService {
     }
 
     public Client updateClient(Client client) {
-      return clientRepository.save(client);
+        return clientRepository.save(client);
     }
 
     public void deleteClient(int id) {
-         clientRepository.delete(id);
+        clientRepository.delete(id);
     }
 
     public List<Client> findAll() {
         return clientRepository.findAll();
+    }
+
+    public Client findbyName(String username) {
+        return clientRepository.findByUsername(username);
     }
 }

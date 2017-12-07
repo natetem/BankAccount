@@ -4,7 +4,6 @@ import com.marie.bank.model.Account;
 import com.marie.bank.service.ClientService;
 import com.marie.bank.model.Client;
 import com.marie.bank.service.AccountService;
-import java.util.ArrayList;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,11 +30,11 @@ public class Application implements CommandLineRunner {
 
     @Transactional
     private void createData() {
-        Client jack = new Client("Jack", "Bauer");
-        Client chloe = new Client("Chloe", "O'Brian");
-        Client kim = new Client("Kim", "Bauer");
-        Client david = new Client("David", "Palmer");
-        Client michelle = new Client("Michelle", "Dessler");
+        Client jack = new Client("jackb","Jack", "Bauer","123.");
+        Client chloe = new Client("chloeo","Chloe", "O'Brian","123.");
+        Client kim = new Client("kimb","Kim", "Bauer","123.");
+        Client david = new Client("davidp","David", "Palmer","132.");
+        Client michelle = new Client("michelled","Michelle", "Dessler","123.");
         clientService.createClient(jack);
         clientService.createClient(chloe);
         clientService.createClient(kim);
