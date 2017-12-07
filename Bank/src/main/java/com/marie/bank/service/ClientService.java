@@ -20,15 +20,15 @@ public class ClientService {
         return clientRepository.findOne(id);
     }
 
-    public void updateClient(Client client) {
-        clientRepository.save(client);
+    public Client updateClient(Client client) {
+      return clientRepository.save(client);
     }
 
     public void deleteClient(int id) {
-        clientRepository.delete(id);
+         clientRepository.delete(id);
     }
 
-    public List<Client> findByLastName(String lastName) {
-        return clientRepository.findByLastName(lastName);
+    public List<Client> findAll() {
+        return clientRepository.findAll();
     }
 }
