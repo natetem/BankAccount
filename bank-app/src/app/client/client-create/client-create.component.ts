@@ -30,8 +30,11 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     });
 
     this.clientForm = new FormGroup({
+    username: new FormControl('', Validators.required),
       firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required)
+      lastName: new FormControl('', Validators.required),
+      password: new FormControl('',Validators.required)
+      
     });
 
 
@@ -41,6 +44,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
         client => {
           this.id = client.id;
           this.clientForm.patchValue({
+          username: client.username,
             firstName: client.firstName,
             lastName: client.lastName,
           });
@@ -62,13 +66,19 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     if (this.clientForm.valid) {
       if (this.id) {
         let client: Client = new Client(this.id,
+          this.clientForm.controls['username'].value,
           this.clientForm.controls['firstName'].value,
-          this.clientForm.controls['lastName'].value);
+          this.clientForm.controls['lastName'].value,
+          this.clientForm.controls['password'].value,
+          
+          );
         this.clientService.updateClient(client).subscribe();
       } else {
         let client: Client = new Client(null,
+          this.clientForm.controls['username'].value,
           this.clientForm.controls['firstName'].value,
-          this.clientForm.controls['lastName'].value);
+          this.clientForm.controls['lastName'].value,
+          this.clientForm.controls['password'].value,);
         this.clientService.saveClient(client).subscribe();
 
       }

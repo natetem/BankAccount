@@ -5,7 +5,7 @@
         <header class="header">
           <div class="row">
             <div class="col-md-4">
-              <h1>Users</h1>
+              <h1>Clients</h1>
             </div>
             <div class="col-md-6">
 
@@ -24,6 +24,7 @@
           <thead>
           <tr>
             <th>#</th>
+            <th>UserName</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th></th>
@@ -32,6 +33,7 @@
           <tbody>
           <tr *ngFor="let client of clients">
             <th scope="row">{{client.id}}</th>
+              <td>{{client.username}}</td>
             <td>{{client.firstName}}</td>
             <td>{{client.lastName}}</td>
            <td>
