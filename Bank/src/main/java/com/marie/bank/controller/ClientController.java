@@ -35,7 +35,7 @@ public class ClientController {
     
     @RequestMapping(value = "/get/{username}", method = RequestMethod.GET)
     public Client getClientByUsername(@PathVariable String username) {
-        return clientService.findbyName(username);
+        return clientService.findbyUsername(username);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

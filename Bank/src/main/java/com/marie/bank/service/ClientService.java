@@ -32,7 +32,7 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public Client findbyName(String username) {
+    public Client findbyUsername(String username) {
         return clientRepository.findByUsername(username);
     }
 }
