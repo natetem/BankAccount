@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <section>
+        <header class="header">
+          <div class="row">
+            <div class="col-md-4">
+              <h1>Users</h1>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" (click)="redirectNewClientPage()">New Client</button>
+            </div>
+          </div>
+
+        </header>
+      </section>
+
+      <section class="main">
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Balance</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let account of accounts">
+            <th scope="row">{{account.id}}</th>
+            <td>{{account.client.firstName}}</td>
+            <td>{{account.client.lastName}}</td>
+            <td>{{account.balance}}</td>
+           <td>
+              <button type="button" class="btn btn-success" (click)="editAccountPage(account)">Edit</button>
+              <button type="button" class="btn btn-danger" (click)="deleteAccount(Account)">Delete</button>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</div>

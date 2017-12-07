@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { ClientModule } from './client/client.module';
-
+import { AccountModule } from './account/account.module';
 import { HttpModule } from '@angular/http';
 
 
@@ -17,7 +17,8 @@ import { HttpModule } from '@angular/http';
     BrowserModule,
     AppRoutingModule,
      ClientModule,
-     HttpModule
+     HttpModule,
+     AccountModule
   ],
   providers: [],
   bootstrap: [AppComponent]
