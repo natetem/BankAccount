@@ -2,19 +2,15 @@ package com.marie.bank.controller;
 
 import com.marie.bank.model.Account;
 import com.marie.bank.model.Client;
-import com.marie.bank.model.NegativeAmountException;
 import com.marie.bank.service.AccountService;
 import com.marie.bank.service.ClientService;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -54,25 +50,13 @@ public class AccountController {
         return true;
     }
 
-    @RequestMapping(value = "/deposit", method = RequestMethod.POST)
-    public boolean depositOnAccount(@RequestParam Long id, @RequestParam double amount) {
-        try {
-            Account account = accountService.getAccount(id);
-            account.deposit(amount);
-            return true;
-        } catch (NegativeAmountException ex) {
-            return false;
-        }
-
-    }
-
     @RequestMapping(method = RequestMethod.POST)
-    public Account createAccount(@RequestBody Account account) {
+    public Account createAccount(@ModelAttribute Account account) {
         return accountService.createAccount(account);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Account updateAccount(@RequestBody Account account) {
+    public Account updateAccount(@ModelAttribute Account account) {
         return accountService.updateAccount(account);
     }
 

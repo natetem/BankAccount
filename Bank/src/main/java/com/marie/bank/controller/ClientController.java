@@ -5,6 +5,7 @@ import com.marie.bank.model.Client;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,12 +41,12 @@ public class ClientController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Client createClient(@RequestBody Client client) {
+    public Client createClient(@ModelAttribute Client client) {
         return clientService.createClient(client);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Client updateClient(@RequestBody Client client) {
+    public Client updateClient(@ModelAttribute Client client) {
         return clientService.updateClient(client);
     }
 
