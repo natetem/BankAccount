@@ -1,4 +1,4 @@
-package com.marie.bank.model;
+package com.marie.bank.exception;
 
 /**
  *
@@ -6,7 +6,7 @@ package com.marie.bank.model;
  */
 public class NegativeAmountException extends Exception {
 
-    NegativeAmountException(String message) {
+    public NegativeAmountException(String message) {
         super(message);
     }
 }
