@@ -32,7 +32,7 @@
           </thead>
           <tbody>
           <tr *ngFor="let account of accounts">
-            <th scope="row">{{account.id}}</th>
+            <th scope="row"><a routerLink="/account/detail/{{account.id}}"><h4>{{account.id}}</h4></a></th>
             <td>{{account.client.firstName}}</td>
             <td>{{account.client.lastName}}</td>
             <td>{{account.balance}}</td>

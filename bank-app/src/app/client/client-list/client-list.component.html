@@ -33,9 +33,10 @@
           <tbody>
           <tr *ngFor="let client of clients">
             <th scope="row">{{client.id}}</th>
-              <td>{{client.username}}</td>
+              <td><a routerLink="/client/detail/{{client.id}}"><h4>{{client.username}}</h4></a></td>
             <td>{{client.firstName}}</td>
             <td>{{client.lastName}}</td>
+            
            <td>
               <button type="button" class="btn btn-success" (click)="editClientPage(client)">Edit</button>
               <button type="button" class="btn btn-danger" (click)="deleteClient(client)">Delete</button>

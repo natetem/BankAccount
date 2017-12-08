@@ -38,7 +38,8 @@ public class Account implements Serializable {
         this.client = client;
     }
 
-    public void deposit(double amount) {
+    public void deposit(double amount) throws NegativeAmountException {
+        if(amount<0)throw new NegativeAmountException("Amount must be positive");
         this.balance += amount;
     }
 

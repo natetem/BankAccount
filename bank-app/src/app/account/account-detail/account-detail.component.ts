@@ -1,15 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
+import { Account } from "../account";
+import { AccountService } from "../account.service";
+import { ActivatedRoute } from '@angular/router';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-account-detail',
   templateUrl: './account-detail.component.html',
-  styleUrls: ['./account-detail.component.css']
+  styleUrls: ['./account-detail.component.css'],
+  providers: [AccountService]
 })
 export class AccountDetailComponent implements OnInit {
+  @Input() account: Account;
+   accountForm: FormGroup;
 
-  constructor() { }
+  
+  constructor( private accountService: AccountService,
+               private route: ActivatedRoute) { }
 
   ngOnInit() {
+  this.getAccount();
+  this.accountForm = new FormGroup ({
+     amount: new FormControl('', [
+      Validators.required,
+      Validators.min(0),])
+  });
   }
-
+  getAccount():void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.accountService.findById(id).subscribe( account => this.account = account);
+  }
+   onSubmit() {
+   
+   
+   }
 }

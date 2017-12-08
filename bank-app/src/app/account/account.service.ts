@@ -25,6 +25,12 @@ export class AccountService {
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
 
   }
+       depositAccount(account: Account): Observable<Account> {
+
+    return this.http.post(this.apiUrl+'/deposit', account)
+      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+
+  }
 
   deleteAccountById(id: number): Observable<boolean> {
     return this.http.delete(this.apiUrl + '/' + id)
@@ -41,6 +47,12 @@ export class AccountService {
 
   findAll(): Observable<Account[]>  {
     return this.http.get(this.apiUrl)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
+  
+   findAllByClient(id: number): Observable<Account[]>  {
+    return this.http.get(this.apiUrl+'/client/'+id)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
