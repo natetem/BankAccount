@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AccountServiceIT {
+public class AccountServiceTest {
 
     @Autowired
     private AccountService accountService;
@@ -38,6 +38,13 @@ public class AccountServiceIT {
     public void findAllAccounts() {
         List<Account> accounts = accountService.findAll();
         assertThat(accounts.size()).isGreaterThan(3);
+    }
+    
+    @Test
+    public void findAccountsByClient() {
+        Client client = clientService.getClient(1);
+        List<Account> accounts = accountService.findAccountsByClient(client);
+        assertThat(accounts.get(0).getClient().getFirstName()).isEqualTo("Jack");
     }
 
     @Test

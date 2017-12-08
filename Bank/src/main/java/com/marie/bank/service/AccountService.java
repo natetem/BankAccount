@@ -1,6 +1,7 @@
 package com.marie.bank.service;
 
 import com.marie.bank.model.Account;
+import com.marie.bank.model.Client;
 import com.marie.bank.repository.AccountRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,9 @@ public class AccountService {
 
     public List<Account> findAll() {
         return accountRepository.findAll();
+    }
+    
+    public List<Account> findAccountsByClient( Client client){
+        return accountRepository.findAccountsByClient(client);
     }
 }

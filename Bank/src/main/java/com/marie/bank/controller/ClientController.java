@@ -32,11 +32,6 @@ public class ClientController {
     public Client getClient(@PathVariable Integer id) {
         return clientService.getClient(id);
     }
-    
-    @RequestMapping(value = "/get/{username}", method = RequestMethod.GET)
-    public Client getClientByUsername(@PathVariable String username) {
-        return clientService.findbyUsername(username);
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public boolean deleteClient(@PathVariable Integer id) {
@@ -48,7 +43,7 @@ public class ClientController {
     public Client createClient(@RequestBody Client client) {
         return clientService.createClient(client);
     }
-    
+
     @RequestMapping(method = RequestMethod.PUT)
     public Client updateClient(@RequestBody Client client) {
         return clientService.updateClient(client);

@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ClientServiceIT {
+public class ClientServiceTest {
 
     @Autowired
      private ClientService clientService;
@@ -29,12 +29,6 @@ public class ClientServiceIT {
 
     }
 
-    @Test
-    public void findClientByUsernameJackb() {
-        Client client = clientService.findbyUsername("jackb");
-        assertThat(client.getLastName()).isEqualTo("Bauer");
-
-    }
 
     @Test
     public void findAllClients() {

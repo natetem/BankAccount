@@ -1,5 +1,6 @@
 package com.marie.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -11,7 +12,7 @@ import javax.persistence.ManyToOne;
 
 /**
  * This class Manage the Bank Accounts
- * 
+ *
  * @author <a href="mailto:mariejeanne.natete@gmail.com">Marie Jeanne NATETE</a>
  */
 @Entity
@@ -22,8 +23,10 @@ public class Account implements Serializable {
     private Long id;
 
     private double balance;
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "client_id")
+
     private Client client;
 
     public Account() {
@@ -62,7 +65,8 @@ public class Account implements Serializable {
     public void setClient(Client client) {
         this.client = client;
     }
-      @Override
+
+    @Override
     public String toString() {
         return String.format(
                 "Account[id=%d, balance='%s', client='%s']",
@@ -98,6 +102,5 @@ public class Account implements Serializable {
         }
         return Objects.equals(this.client, other.client);
     }
-    
 
 }

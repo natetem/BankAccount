@@ -13,6 +13,7 @@ public class ClientService {
     private ClientRepository clientRepository;
 
     public Client createClient(Client client) {
+        
         return clientRepository.save(client);
     }
 
@@ -32,7 +33,4 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public Client findbyUsername(String username) {
-        return clientRepository.findByUsername(username);
-    }
 }

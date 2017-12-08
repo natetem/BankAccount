@@ -1,6 +1,6 @@
 package com.marie.bank.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +27,7 @@ public class Client implements Serializable {
     private String firstName;
     private String lastName;
     private String password;
-    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Account> accounts;
 

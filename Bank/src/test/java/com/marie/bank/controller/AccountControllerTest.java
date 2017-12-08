@@ -1,7 +1,9 @@
 package com.marie.bank.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.marie.bank.model.Account;
 import com.marie.bank.model.Client;
+import com.marie.bank.service.AccountService;
 import com.marie.bank.service.ClientService;
 import static org.hamcrest.Matchers.equalTo;
 import org.junit.Before;
@@ -28,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ClientControllerTest {
+public class AccountControllerTest {
 
     private MockMvc mvc;
 
@@ -38,61 +40,66 @@ public class ClientControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private ClientService clientService;
+
     @Before
     public void setUp() {
         this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
     }
-    
-     @Autowired
-    private ClientService clientService;
 
     @Test
-    public void getClientById() throws Exception {
-        mvc.perform(get("/clients/1"))
+    public void getAccountById() throws Exception {
+        mvc.perform(get("/accounts/1"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", equalTo(1)))
-                .andExpect(jsonPath("username", equalTo("jackb")));
+                .andExpect(jsonPath("balance", equalTo(200.0)))
+                .andExpect(jsonPath("client.id", equalTo(1)));
 
     }
 
     @Test
-    public void findAllClients() throws Exception {
-        mvc.perform(get("/clients"))
+    public void findAllAccounts() throws Exception {
+        mvc.perform(get("/accounts"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[1].id", equalTo(2)))
-                .andExpect(jsonPath("$[1].username", equalTo("chloeo")));
+                .andExpect(jsonPath("$[1].balance", equalTo(400.0)))
+                .andExpect(jsonPath("$[1].client.username", equalTo("jackb")));
 
     }
 
     @Test
-    public void deleteClient() throws Exception {
-        mvc.perform(delete("/clients/3"))
+    public void deleteAccount() throws Exception {
+        mvc.perform(delete("/accounts/3"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void createClient() throws Exception {
-        Client client = new Client("natetem", "Marie", "Natete", "123.");
-        mvc.perform(post("/clients")
-                .content(objectMapper.writeValueAsString(client))
+    public void createAccount() throws Exception {
+        Client client = clientService.getClient(2);
+        Account account = new Account(1000, client);
+        mvc.perform(post("/accounts")
+                .content(objectMapper.writeValueAsString(account))
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
     }
 
     @Test
-    public void updateClient() throws Exception {
-        Client client = clientService.getClient(1);
-        client.setPassword("123456.");
-        mvc.perform(put("/clients")
-                .content(objectMapper.writeValueAsString(client))
+    public void updateAccount() throws Exception {
+        Account account = accountService.getAccount(1L);
+        account.setBalance(800);
+
+        mvc.perform(put("/accounts")
+                .content(objectMapper.writeValueAsString(account))
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
-
-  
 
 }
