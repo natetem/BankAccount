@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Account } from "../account";
-import { AccountService } from "../account.service";
+import { Account } from '../account';
+import { AccountService } from '../account.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,15 +11,15 @@ import { Router } from '@angular/router';
 })
 
 export class AccountListComponent implements OnInit {
- 
+
   private accounts: Account[];
- 
+
   constructor(private router: Router, private accountService: AccountService) { }
- 
-  ngOnInit() { 
+
+  ngOnInit() {
     this.getAllAccounts();
   }
- 
+
   getAllAccounts() {
     this.accountService.findAll().subscribe(
       accounts => {
@@ -28,22 +28,9 @@ export class AccountListComponent implements OnInit {
       err => {
         console.log(err);
       }
- 
+
     );
   }
-    redirectNewAccountPage() {
-    this.router.navigate(['/account/create']);
-  }
- 
-  editAccountPage(account: Account) {
-    if (account) {
-      this.router.navigate(['/account/edit', account.id]);
-    }
-  }
- 
-  deleteAccount(account: Account) {
-   this.accountService.deleteAccountById(account.id).subscribe();
-      this.router.navigate(['/account']);
-  }
- 
+
+
 }

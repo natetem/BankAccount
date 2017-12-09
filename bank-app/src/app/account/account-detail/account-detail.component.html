@@ -1,17 +1,17 @@
 <div class="container" *ngIf="account">
     <h2> Welcome {{ account.client.username | uppercase }} </h2>
-    <h4> FirstName   :{{ account.client.firstName}} </h4>
-    <h4> LastName    :{{ account.client.lastName }} </h4>
-    <h4> Balance   :{{ account.balance }} </h4>
+    <h4> FirstName :{{ account.client.firstName}} </h4>
+    <h4> LastName :{{ account.client.lastName }} </h4>
+    <h4> Balance :{{ account.balance }} </h4>
 
     <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" novalidate>
 
-        <div class="form-group">  
+        <div class="form-group">
             <label class="btn btn-primary">
-            <input type="radio" value="Deposit" class="btn btn-success" formControlName="operation"> Deposit
+                <input type="radio" value="Deposit" class="btn btn-success" formControlName="operation" [checked]="onOperationChange()"> Deposit
             </label>
             <label class="btn btn-primary">
-            <input type="radio" value="Withdrawal" class="btn btn-success" formControlName="operation"> Withdrawal
+                <input type="radio" value="Withdrawal" class="btn btn-success" formControlName="operation" [checked]="onOperationChange()"> Withdrawal
             </label>
         </div>
         <div *ngIf="accountForm.get('operation').dirty">
@@ -22,7 +22,7 @@
                 <input type="number" class="form-control" formControlName="amount">
 
             </div>
-            <button type="submit" class="btn btn-success"[disabled]="!accountForm.valid" >{{accountForm.get('operation').value}}</button>
+            <button type="submit" class="btn btn-success" [disabled]="!accountForm.valid">{{accountForm.get('operation').value}}</button>
         </div>
 
     </form>
@@ -32,8 +32,8 @@
         <table class="table">
             <thead>
                 <tr>
-                  
-                    <th>Operation</th> 
+
+                    <th>Operation</th>
                     <th>Date</th>
                     <th>Amount</th>
                     <th>Balance</th>

@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { ClientModule } from './client/client.module';
 import { AccountModule } from './account/account.module';
 import { HttpModule } from '@angular/http';
 
@@ -16,9 +15,8 @@ import { HttpModule } from '@angular/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-     ClientModule,
-     HttpModule,
-     AccountModule
+    HttpModule,
+    AccountModule
   ],
   providers: [],
   bootstrap: [AppComponent]

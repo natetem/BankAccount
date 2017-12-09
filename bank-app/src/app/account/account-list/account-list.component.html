@@ -3,7 +3,7 @@
     <h1>Accounts</h1>
 
     <table class="table table-striped ">
-        <thead >
+        <thead>
             <tr>
                 <th>UserName</th>
                 <th>FirstName</th>
@@ -19,7 +19,9 @@
                 <td>{{account.client.lastName}}</td>
                 <td>{{account.balance}}</td>
                 <td>
-                    <a routerLink="/account/detail/{{account.id}}" class="btn btn-primary "><h4> Go to Account </h4></a>
+                    <a routerLink="/account/detail/{{account.id}}" class="btn btn-primary ">
+                        <h4> Go to Account </h4>
+                    </a>
                 </td>
             </tr>
 
