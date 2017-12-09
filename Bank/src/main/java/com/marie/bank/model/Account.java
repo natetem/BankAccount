@@ -1,6 +1,8 @@
 package com.marie.bank.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.marie.bank.exception.AmountGreaterThanBalanceException;
+import com.marie.bank.exception.NegativeAmountException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -45,11 +47,21 @@ public class Account implements Serializable {
         this.client = client;
     }
 
-    public void deposit(double amount)  {
-//        if (amount < 0) {
-//            throw new NegativeAmountException("Amount must be positive");
-//        }
+    public void deposit(double amount) throws NegativeAmountException {
+        if (amount < 0) {
+            throw new NegativeAmountException("Amount must be positive");
+        }
         this.balance += amount;
+    }
+
+    public void withdrawal(double amount) throws NegativeAmountException, AmountGreaterThanBalanceException {
+        if (amount < 0) {
+            throw new NegativeAmountException("Amount must be positive");
+        } else if (amount > this.balance) {
+            throw new AmountGreaterThanBalanceException("Amount can not be greater than the balance ");
+        }
+
+        this.balance -= amount;
     }
 
     public int getId() {
@@ -64,32 +76,15 @@ public class Account implements Serializable {
         return client;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     public List<Operation> getOperations() {
         return operations;
     }
 
-    public void setOperations(List<Operation> operations) {
-        this.operations = operations;
-    }
-    
-
     @Override
     public String toString() {
         return String.format(
-                "Account[id=%d, balance='%s', client='%s']",
-                id, balance, client);
+                "Account[id=%d, balance=%s, client=%s,operations=%s]",
+                id, balance, client,operations);
     }
 
     @Override
@@ -125,9 +120,5 @@ public class Account implements Serializable {
         }
         return Objects.equals(this.operations, other.operations);
     }
-
- 
-
-   
 
 }

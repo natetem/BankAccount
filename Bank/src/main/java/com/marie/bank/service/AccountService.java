@@ -1,5 +1,7 @@
 package com.marie.bank.service;
 
+import com.marie.bank.exception.AmountGreaterThanBalanceException;
+import com.marie.bank.exception.NegativeAmountException;
 import com.marie.bank.model.Account;
 import com.marie.bank.model.Client;
 import com.marie.bank.model.Operation;
@@ -39,10 +41,25 @@ public class AccountService {
     }
 
     public Account depositOperation(int id, double amount) {
-        Account account = accountRepository.findOne(id);
-        account.deposit(amount);
-        operationRepository.save(new Operation(amount, account));
-        return accountRepository.save(account);
+        try {
+            Account account = accountRepository.findOne(id);
+            account.deposit(amount);
+            operationRepository.save(new Operation(amount, account));
+            return accountRepository.save(account);
+        } catch (NegativeAmountException ex) {
+            return null;
+        }
+    }
+    
+     public Account withdrawalOperation(int id, double amount) {
+        try {
+            Account account = accountRepository.findOne(id);
+            account.withdrawal(amount);
+            operationRepository.save(new Operation(amount, account));
+            return accountRepository.save(account);
+        } catch (NegativeAmountException | AmountGreaterThanBalanceException ex) {
+            return null;
+        }
     }
 
     public List<Account> findAll() {

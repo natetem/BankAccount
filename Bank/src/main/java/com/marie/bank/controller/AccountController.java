@@ -55,15 +55,15 @@ public class AccountController {
     public Account depositOnAccount(@RequestParam int id, @RequestParam double amount) {
         return accountService.depositOperation(id, amount);
     }
+    
+    @RequestMapping(value = "/withdrawal",method = RequestMethod.POST)
+    public Account withdrawalOnAccount(@RequestParam int id, @RequestParam double amount) {
+        return accountService.withdrawalOperation(id, amount);
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public Account createAccount(@ModelAttribute Account account) {
         return accountService.createAccount(account);
-    }
-
-    @RequestMapping(method = RequestMethod.PUT)
-    public Account updateAccount(@ModelAttribute Account account) {
-        return accountService.updateAccount(account);
     }
 
 }

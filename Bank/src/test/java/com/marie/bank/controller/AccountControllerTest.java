@@ -68,7 +68,7 @@ public class AccountControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[1].id", equalTo(2)))
-                .andExpect(jsonPath("$[1].balance", equalTo(600.0)))
+                .andExpect(jsonPath("$[1].balance", equalTo(400.0)))
                 .andExpect(jsonPath("$[1].client.username", equalTo("jackb")));
 
     }
@@ -97,16 +97,13 @@ public class AccountControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
+    
+       @Test
+    public void withtdrawalOnAccount() throws Exception {
+        mvc.perform(post("/accounts/withdrawal").param("id", "2").param("amount","200")     
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+    }
 
-//    @Test
-//    public void updateAccount() throws Exception {
-//        Account account = accountService.getAccount(1L);
-//        account.setBalance(800);
-//
-//        mvc.perform(put("/accounts")
-//                .content(objectMapper.writeValueAsString(account))
-//                .contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(status().isOk());
-//    }
 
 }

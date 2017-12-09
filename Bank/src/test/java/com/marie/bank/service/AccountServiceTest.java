@@ -29,7 +29,7 @@ public class AccountServiceTest {
     public void getAccountOne() {
         Account account = accountService.getAccount(1);
         Assert.assertNotNull(account);
-        assertThat(account.getBalance()).isEqualTo(200);
+        assertThat(account.getBalance()).isEqualTo(600);
         Client client = clientService.getClient(1);
         assertThat(account.getClient().getUsername()).isEqualTo(client.getUsername());
     }
@@ -39,7 +39,7 @@ public class AccountServiceTest {
         List<Account> accounts = accountService.findAll();
         assertThat(accounts.size()).isGreaterThan(3);
     }
-    
+
     @Test
     public void findAccountsByClient() {
         Client client = clientService.getClient(1);
@@ -70,6 +70,21 @@ public class AccountServiceTest {
         Account expAccount = new Account(1000, client);
         Account account = accountService.updateAccount(expAccount);
         assertThat(account.getBalance()).isEqualTo(expAccount.getBalance());
+    }
+
+    @Test
+    public void depositOnAccountOne() {
+        Account expAccount = accountService.getAccount(1);
+        Account account = accountService.depositOperation(1, 200);
+        assertThat(account.getBalance()).isGreaterThan(expAccount.getBalance());
+    }
+
+    @Test
+    public void withdrawalOnAccountOne() {
+        Account expAccount = accountService.getAccount(2);
+        Account account = accountService.withdrawalOperation(2, 200);
+        assertThat(account.getBalance()).isLessThan(expAccount.getBalance());
+
     }
 
 }
