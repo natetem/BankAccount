@@ -27,7 +27,7 @@ public class AccountServiceTest {
 
     @Test
     public void getAccountOne() {
-        Account account = accountService.getAccount(1L);
+        Account account = accountService.getAccount(1);
         Assert.assertNotNull(account);
         assertThat(account.getBalance()).isEqualTo(200);
         Client client = clientService.getClient(1);
@@ -49,8 +49,8 @@ public class AccountServiceTest {
 
     @Test
     public void deleteAccountTwo() {
-        accountService.deleteAccount(2L);
-        Account account = accountService.getAccount(2L);
+        accountService.deleteAccount(2);
+        Account account = accountService.getAccount(2);
         Assert.assertNull(account);
         Client client = clientService.getClient(1);
         Assert.assertNotNull(client);

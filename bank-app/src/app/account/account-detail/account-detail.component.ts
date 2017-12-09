@@ -1,7 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { Account } from "../account";
 import { AccountService } from "../account.service";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -16,7 +16,8 @@ export class AccountDetailComponent implements OnInit {
 
   
   constructor( private accountService: AccountService,
-               private route: ActivatedRoute) { }
+               private route: ActivatedRoute,
+ private router: Router) { }
 
   ngOnInit() {
   this.getAccount();
@@ -31,7 +32,8 @@ export class AccountDetailComponent implements OnInit {
     this.accountService.findById(id).subscribe( account => this.account = account);
   }
    onSubmit() {
-   
-   
+   this.accountService.depositAccount(this.account.id,this.accountForm.controls['amount'].value).subscribe();
+   this.accountForm.reset();
+   this.router.navigate(['/account']);
    }
 }

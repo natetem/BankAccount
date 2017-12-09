@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Account } from "./account";
-import { Http, Response } from "@angular/http";
+import { Http, Response,URLSearchParams } from "@angular/http";
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch';
 import { Observable } from "rxjs/Observable";
+
  
 @Injectable()
 export class AccountService {
@@ -25,9 +26,13 @@ export class AccountService {
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
 
   }
-       depositAccount(account: Account): Observable<Account> {
-
-    return this.http.post(this.apiUrl+'/deposit', account)
+    
+  depositAccount(id:number, amount:number): Observable<Account> {
+   let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('amount', amount);
+     
+    return this.http.post(this.apiUrl+'/deposit', urlSearchParams)
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
 
   }

@@ -24,7 +24,7 @@ public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     private double balance;
     @JsonManagedReference
@@ -52,7 +52,7 @@ public class Account implements Serializable {
         this.balance += amount;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -64,7 +64,7 @@ public class Account implements Serializable {
         return client;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

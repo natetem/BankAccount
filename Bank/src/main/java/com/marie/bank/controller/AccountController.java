@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -40,14 +41,19 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Account getAccount(@PathVariable Long id) {
+    public Account getAccount(@PathVariable int id) {
         return accountService.getAccount(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public boolean deleteAccount(@PathVariable Long id) {
+    public boolean deleteAccount(@PathVariable int id) {
         accountService.deleteAccount(id);
         return true;
+    }
+
+    @RequestMapping(value = "/deposit",method = RequestMethod.POST)
+    public Account depositOnAccount(@RequestParam int id, @RequestParam double amount) {
+        return accountService.depositOperation(id, amount);
     }
 
     @RequestMapping(method = RequestMethod.POST)

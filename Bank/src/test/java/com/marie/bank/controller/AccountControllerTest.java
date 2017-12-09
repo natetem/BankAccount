@@ -57,7 +57,7 @@ public class AccountControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id", equalTo(1)))
-                .andExpect(jsonPath("balance", equalTo(200.0)))
+                .andExpect(jsonPath("balance", equalTo(600.0)))
                 .andExpect(jsonPath("client.id", equalTo(1)));
 
     }
@@ -68,7 +68,7 @@ public class AccountControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[1].id", equalTo(2)))
-                .andExpect(jsonPath("$[1].balance", equalTo(400.0)))
+                .andExpect(jsonPath("$[1].balance", equalTo(600.0)))
                 .andExpect(jsonPath("$[1].client.username", equalTo("jackb")));
 
     }
@@ -88,18 +88,25 @@ public class AccountControllerTest {
                 .content(objectMapper.writeValueAsString(account))
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
-
+        
     }
-
-    @Test
-    public void updateAccount() throws Exception {
-        Account account = accountService.getAccount(1L);
-        account.setBalance(800);
-
-        mvc.perform(put("/accounts")
-                .content(objectMapper.writeValueAsString(account))
+    
+      @Test
+    public void depositOnAccount() throws Exception {
+        mvc.perform(post("/accounts/deposit").param("id", "1").param("amount","200")     
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
+
+//    @Test
+//    public void updateAccount() throws Exception {
+//        Account account = accountService.getAccount(1L);
+//        account.setBalance(800);
+//
+//        mvc.perform(put("/accounts")
+//                .content(objectMapper.writeValueAsString(account))
+//                .contentType(MediaType.APPLICATION_JSON_UTF8))
+//                .andExpect(status().isOk());
+//    }
 
 }

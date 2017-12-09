@@ -3,9 +3,7 @@ package com.marie.bank;
 import com.marie.bank.model.Account;
 import com.marie.bank.service.ClientService;
 import com.marie.bank.model.Client;
-import com.marie.bank.model.Operation;
 import com.marie.bank.service.AccountService;
-import com.marie.bank.service.OperationService;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,9 +18,6 @@ public class Application implements CommandLineRunner {
 
     @Autowired
     private AccountService accountService;
-
-    @Autowired
-    private OperationService operationService;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -56,9 +51,8 @@ public class Application implements CommandLineRunner {
         accountService.createAccount(accountJack2);
         accountService.createAccount(accountChloe1);
         //create operations
-        Operation op1 = new Operation(200, accountJack1);
-        Operation op2 = new Operation(400, accountJack1);
-        operationService.depositOperation(op1);
-        operationService.depositOperation(op2);
+
+        accountService.depositOperation(1, 200);
+        accountService.depositOperation(2, 200);
     }
 }
