@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 export class AccountService {
 
   private apiUrl = 'http://localhost:8090/accounts';
-
+  private apiUrlOp = 'http://localhost:8090/operations';
   constructor(private http: Http) {
   }
 
@@ -20,12 +20,19 @@ export class AccountService {
       .catch((error: any) => Observable.throw(error.json().error || 'Error'));
   }
 
+
+  findAll(): Observable<Account[]> {
+    return this.http.get(this.apiUrl)
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   depositAccount(id: number, amount: number): Observable<Account> {
     const urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id.toString());
     urlSearchParams.append('amount', amount.toString());
 
-    return this.http.post(this.apiUrl + '/deposit', urlSearchParams)
+    return this.http.post(this.apiUrlOp + '/deposit', urlSearchParams)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 
   }
@@ -35,16 +42,11 @@ export class AccountService {
     urlSearchParams.append('id', id.toString());
     urlSearchParams.append('amount', amount.toString());
 
-    return this.http.post(this.apiUrl + '/withdrawal', urlSearchParams)
+    return this.http.post(this.apiUrlOp + '/withdrawal', urlSearchParams)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 
   }
 
-  findAll(): Observable<Account[]> {
-    return this.http.get(this.apiUrl)
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
 
 
 }

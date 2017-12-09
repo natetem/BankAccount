@@ -1,26 +1,23 @@
 <div class="container">
-
-    <h1>Accounts</h1>
+    <div class="alert alert-info" role="alert">
+        Welcome to accounts page, if you want to show more details, choice an account.
+      </div>
 
     <table class="table table-striped ">
-        <thead>
+        <thead class="thead-dark">
             <tr>
-                <th>UserName</th>
                 <th>FirstName</th>
                 <th>LastName</th>
-                <th>Balance</th>
-                <th></th>
+                <th>Detail Account</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let account of accounts">
-                <td>{{account.client.username}}</td>
                 <td>{{account.client.firstName}}</td>
                 <td>{{account.client.lastName}}</td>
-                <td>{{account.balance}}</td>
                 <td>
                     <a routerLink="/account/detail/{{account.id}}" class="btn btn-primary ">
-                        <h4> Go to Account </h4>
+                        <h4> Account </h4>
                     </a>
                 </td>
             </tr>

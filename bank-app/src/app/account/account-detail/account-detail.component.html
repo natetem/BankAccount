@@ -1,8 +1,13 @@
 <div class="container" *ngIf="account">
-    <h2> Welcome {{ account.client.username | uppercase }} </h2>
-    <h4> FirstName :{{ account.client.firstName}} </h4>
-    <h4> LastName :{{ account.client.lastName }} </h4>
-    <h4> Balance :{{ account.balance }} </h4>
+ 
+    
+
+    <div class="jumbotron">
+        <h1 class="display-3">Welcome {{ account.client.firstName}} {{ account.client.lastName|uppercase }} </h1>
+        <h4> Your Balance :{{ account.balance }} </h4>
+        <hr class="my-4">
+        <p>Choice the operation that you want to do </p>
+      </div>
 
     <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" novalidate>
 
