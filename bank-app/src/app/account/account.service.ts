@@ -29,10 +29,20 @@ export class AccountService {
     
   depositAccount(id:number, amount:number): Observable<Account> {
    let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('id', id);
-    urlSearchParams.append('amount', amount);
+    urlSearchParams.append('id', id.toString());
+    urlSearchParams.append('amount', amount.toString());
      
     return this.http.post(this.apiUrl+'/deposit', urlSearchParams)
+      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+
+  }
+      
+      withdrawalAccount(id:number, amount:number): Observable<Account> {
+   let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id.toString());
+    urlSearchParams.append('amount', amount.toString());
+     
+    return this.http.post(this.apiUrl+'/withdrawal', urlSearchParams)
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
 
   }
@@ -43,12 +53,7 @@ export class AccountService {
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  updateAccount(account: Account): Observable<Account> {
-    return this.http.put(this.apiUrl, account)
-      .map((res:Response) => res.json())
-      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
 
-  }
 
   findAll(): Observable<Account[]>  {
     return this.http.get(this.apiUrl)

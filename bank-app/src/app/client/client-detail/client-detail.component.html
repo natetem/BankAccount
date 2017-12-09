@@ -3,4 +3,30 @@
   <h4> FirstName   :{{ client.firstName}} </h4>
   <h4> LastName    :{{ client.lastName }} </h4>
   
+      <section class="main">
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Balance</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let account of accounts">
+            <th scope="row">{{account.id}}</th>
+          
+            <td>{{account.balance}}</td>
+            
+            
+           <td>
+             <a routerLink="/account/detail/{{account.id}}"><h4> Go to Account</h4></a>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+      </section>
+  
 </div>

@@ -24,7 +24,8 @@ export class AccountDetailComponent implements OnInit {
   this.accountForm = new FormGroup ({
      amount: new FormControl('', [
       Validators.required,
-      Validators.min(0),])
+      Validators.min(0),]),
+      operation: new FormControl('', Validators.required)
   });
   }
   getAccount():void {
@@ -32,8 +33,13 @@ export class AccountDetailComponent implements OnInit {
     this.accountService.findById(id).subscribe( account => this.account = account);
   }
    onSubmit() {
+   if(this.accountForm.controls['operation'].value=='Deposit'){
    this.accountService.depositAccount(this.account.id,this.accountForm.controls['amount'].value).subscribe();
-   this.accountForm.reset();
+   }
+   else{
+    this.accountService.withdrawalAccount(this.account.id,this.accountForm.controls['amount'].value).subscribe();
+   }
+this.accountForm.reset();
    this.router.navigate(['/account']);
    }
 }

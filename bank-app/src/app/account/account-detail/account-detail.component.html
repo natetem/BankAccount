@@ -5,13 +5,42 @@
     <h4> Balance   :{{ account.balance }} </h4>
 
     <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" novalidate>
-        <div class="form-group">
 
-            <label class="center-block">Amount:</label>
-            <input type="number" class="form-control" formControlName="amount">
-
+        <div class="form-group">       
+            <input type="radio" value="Deposit" formControlName="operation"> Deposit
+            <input type="radio" value="Withdrawal" formControlName="operation"> Withdrawal
         </div>
-        <button type="submit" class="btn btn-success"[disabled]="!accountForm.valid" >Submit</button>
+        <div *ngIf="accountForm.get('operation').dirty">
 
+
+            <div class="form-group">
+                <label class="center-block">{{accountForm.get('operation').value}} Amount:</label>
+                <input type="number" class="form-control" formControlName="amount">
+
+            </div>
+            <button type="submit" class="btn btn-success"[disabled]="!accountForm.valid" >{{accountForm.get('operation').value}}</button>
+        </div>
+        
     </form>
+    
+    <section class="main">
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Amount</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let operation of account.operations">
+            <th scope="row"><h4>{{operation.id}}</h4></th>
+           
+            <td>{{operation.amount}}</td>
+        
+          </tr>
+
+          </tbody>
+        </table>
+      </section>
 </div>

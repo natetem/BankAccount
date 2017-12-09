@@ -11,7 +11,7 @@
 
             </div>
             <div class="col-md-2">
-                <button type="button" class="btn btn-primary" (click)="redirectNewClientPage()">New Client</button>
+                
             </div>
           </div>
 
@@ -32,13 +32,13 @@
           </thead>
           <tbody>
           <tr *ngFor="let account of accounts">
-            <th scope="row"><a routerLink="/account/detail/{{account.id}}"><h4>{{account.id}}</h4></a></th>
+            <th scope="row"><h4>{{account.id}}</h4></th>
             <td>{{account.client.firstName}}</td>
             <td>{{account.client.lastName}}</td>
             <td>{{account.balance}}</td>
            <td>
-              <button type="button" class="btn btn-success" (click)="editAccountPage(account)">Edit</button>
-              <button type="button" class="btn btn-danger" (click)="deleteAccount(Account)">Delete</button>
+            <a routerLink="/account/detail/{{account.id}}"><h4> Deposit </h4></a>
+            <a routerLink="/client/detail/{{account.client.id}}"><h4> client</h4></a>
             </td>
           </tr>
 
