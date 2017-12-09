@@ -37,19 +37,19 @@ public class Application implements CommandLineRunner {
         Client kim = new Client("kimb", "Kim", "Bauer", "123.");
         Client david = new Client("davidp", "David", "Palmer", "132.");
         Client michelle = new Client("michelled", "Michelle", "Dessler", "123.");
-        clientService.createClient(jack);
-        clientService.createClient(chloe);
-        clientService.createClient(kim);
-        clientService.createClient(david);
-        clientService.createClient(michelle);
+       
+       
 
         //create accounts
         Account accountJack1 = new Account(200, jack);
-        Account accountJack2 = new Account(400, jack);
+        Account accountkim1 = new Account(400, kim);
         Account accountChloe1 = new Account(300, chloe);
         accountService.createAccount(accountJack1);
-        accountService.createAccount(accountJack2);
+        accountService.createAccount(accountkim1);
         accountService.createAccount(accountChloe1);
+        
+        clientService.createClient(david);
+        clientService.createClient(michelle);
         //create operations
 
         accountService.depositOperation(1, 200);

@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * This class Manage the Bank Accounts
@@ -30,8 +31,8 @@ public class Account implements Serializable {
 
     private double balance;
     @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "client_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id",unique= true, nullable=true, insertable=true, updatable=true)
     private Client client;
 
     @JsonManagedReference
@@ -42,8 +43,8 @@ public class Account implements Serializable {
 
     }
 
-    public Account(double balance, Client client) {
-        this.balance = balance;
+    public Account(double balance,Client client) {
+        this.balance=balance;
         this.client = client;
     }
 
@@ -84,7 +85,7 @@ public class Account implements Serializable {
     public String toString() {
         return String.format(
                 "Account[id=%d, balance=%s, client=%s,operations=%s]",
-                id, balance, client,operations);
+                id, balance, client, operations);
     }
 
     @Override

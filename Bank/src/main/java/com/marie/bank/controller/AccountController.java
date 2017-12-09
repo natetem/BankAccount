@@ -2,6 +2,7 @@ package com.marie.bank.controller;
 
 import com.marie.bank.model.Account;
 import com.marie.bank.model.Client;
+import com.marie.bank.model.Operation;
 import com.marie.bank.service.AccountService;
 import com.marie.bank.service.ClientService;
 import java.util.List;
@@ -28,6 +29,12 @@ public class AccountController {
 
     @Autowired
     private ClientService clientService;
+    
+    @RequestMapping(value = "/operation/{id}", method = RequestMethod.GET)
+    public Operation findOperation(@PathVariable Long id) {
+        return accountService.getOperation(id);
+    }
+
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Account> findAllAccounts() {

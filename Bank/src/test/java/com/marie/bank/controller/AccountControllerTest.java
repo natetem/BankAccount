@@ -69,7 +69,7 @@ public class AccountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[1].id", equalTo(2)))
                 .andExpect(jsonPath("$[1].balance", equalTo(400.0)))
-                .andExpect(jsonPath("$[1].client.username", equalTo("jackb")));
+                .andExpect(jsonPath("$[1].client.username", equalTo("kimb")));
 
     }
 

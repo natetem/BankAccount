@@ -7,6 +7,8 @@ import com.marie.bank.model.Client;
 import com.marie.bank.model.Operation;
 import com.marie.bank.repository.AccountRepository;
 import com.marie.bank.repository.OperationRepository;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,10 @@ public class AccountService {
 
     @Autowired
     private OperationRepository operationRepository;
+    
+    public Operation getOperation(Long id) {
+        return operationRepository.findOne(id);
+    }
 
     public Account createAccount(Account account) {
         return accountRepository.save(account);
@@ -43,8 +49,10 @@ public class AccountService {
     public Account depositOperation(int id, double amount) {
         try {
             Account account = accountRepository.findOne(id);
+            Date date=new Date();
             account.deposit(amount);
-            operationRepository.save(new Operation(amount, account));
+             Operation operation= new Operation("Deposit",date, account.getBalance(), amount, account);
+            operationRepository.save(operation);
             return accountRepository.save(account);
         } catch (NegativeAmountException ex) {
             return null;
@@ -54,8 +62,10 @@ public class AccountService {
      public Account withdrawalOperation(int id, double amount) {
         try {
             Account account = accountRepository.findOne(id);
+            Date date=new Date();          
             account.withdrawal(amount);
-            operationRepository.save(new Operation(amount, account));
+            Operation operation= new Operation("Withdrawal", date, account.getBalance(), amount,account);
+            operationRepository.save(operation);
             return accountRepository.save(account);
         } catch (NegativeAmountException | AmountGreaterThanBalanceException ex) {
             return null;

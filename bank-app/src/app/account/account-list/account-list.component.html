@@ -1,50 +1,29 @@
 <div class="container">
-  <div class="row">
-    <div class="col">
-      <section>
-        <header class="header">
-          <div class="row">
-            <div class="col-md-4">
-              <h1>Users</h1>
-            </div>
-            <div class="col-md-6">
 
-            </div>
-            <div class="col-md-2">
-                
-            </div>
-          </div>
+    <h1>Accounts</h1>
 
-        </header>
-      </section>
+    <table class="table table-striped ">
+        <thead >
+            <tr>
+                <th>UserName</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Balance</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let account of accounts">
+                <td>{{account.client.username}}</td>
+                <td>{{account.client.firstName}}</td>
+                <td>{{account.client.lastName}}</td>
+                <td>{{account.balance}}</td>
+                <td>
+                    <a routerLink="/account/detail/{{account.id}}" class="btn btn-primary "><h4> Go to Account </h4></a>
+                </td>
+            </tr>
 
-      <section class="main">
+        </tbody>
+    </table>
 
-        <table class="table">
-          <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Balance</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let account of accounts">
-            <th scope="row"><h4>{{account.id}}</h4></th>
-            <td>{{account.client.firstName}}</td>
-            <td>{{account.client.lastName}}</td>
-            <td>{{account.balance}}</td>
-           <td>
-            <a routerLink="/account/detail/{{account.id}}"><h4> Deposit </h4></a>
-            <a routerLink="/client/detail/{{account.client.id}}"><h4> client</h4></a>
-            </td>
-          </tr>
-
-          </tbody>
-        </table>
-      </section>
-    </div>
-  </div>
 </div>

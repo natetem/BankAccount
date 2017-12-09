@@ -1,20 +1,15 @@
 package com.marie.bank.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  * This class Manage the clients of Bank
- * 
+ *
  * @author <a href="mailto:mariejeanne.natete@gmail.com">Marie Jeanne NATETE</a>
  */
 @Entity
@@ -27,9 +22,6 @@ public class Client implements Serializable {
     private String firstName;
     private String lastName;
     private String password;
-    @JsonBackReference
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Account> accounts;
 
     public Client() {
     }
@@ -65,14 +57,6 @@ public class Client implements Serializable {
         this.lastName = lastName;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -88,13 +72,12 @@ public class Client implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 
     @Override
     public String toString() {
         return String.format(
                 "Client[id=%d, username='%s',firstName='%s', lastName='%s', password='%s']",
-                id, username,firstName, lastName,password);
+                id, username, firstName, lastName, password);
     }
 
     @Override
@@ -105,7 +88,6 @@ public class Client implements Serializable {
         hash = 67 * hash + Objects.hashCode(this.firstName);
         hash = 67 * hash + Objects.hashCode(this.lastName);
         hash = 67 * hash + Objects.hashCode(this.password);
-        hash = 67 * hash + Objects.hashCode(this.accounts);
         return hash;
     }
 
@@ -133,11 +115,7 @@ public class Client implements Serializable {
         if (!Objects.equals(this.lastName, other.lastName)) {
             return false;
         }
-        if (!Objects.equals(this.password, other.password)) {
-            return false;
-        }
-        return Objects.equals(this.accounts, other.accounts);
+        return Objects.equals(this.password, other.password);
     }
-    
 
 }

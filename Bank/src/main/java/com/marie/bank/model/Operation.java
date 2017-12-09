@@ -1,8 +1,9 @@
 package com.marie.bank.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,12 @@ public class Operation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private String type;
+    
+     private Date date; 
+    
+    private double balance;
 
     private double amount;
     @JsonBackReference
@@ -32,10 +39,16 @@ public class Operation implements Serializable {
     public Operation() {
     }
 
-    public Operation(double amount, Account account) {
+    public Operation(String type, Date date,double balance, double amount, Account account) {
+        this.type = type;
+        this.date = date;
+        this.balance = balance;
         this.amount = amount;
-        this.account = account;
+        this.account=account;
+ 
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
@@ -60,6 +73,20 @@ public class Operation implements Serializable {
     public Account getAccount() {
         return account;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+    
+    
 
     @Override
     public String toString() {

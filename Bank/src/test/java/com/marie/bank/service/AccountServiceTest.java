@@ -37,7 +37,7 @@ public class AccountServiceTest {
     @Test
     public void findAllAccounts() {
         List<Account> accounts = accountService.findAll();
-        assertThat(accounts.size()).isGreaterThan(3);
+        assertThat(accounts.size()).isGreaterThan(2);
     }
 
     @Test
@@ -58,18 +58,10 @@ public class AccountServiceTest {
 
     @Test
     public void createAccountFour() {
-        Client client = clientService.getClient(2);
+        Client client = new Client("natetem", "Marie", "Natete", "123.");
         Account expAccount = new Account(800, client);
         Account account = accountService.createAccount(expAccount);
         assertThat(account.getClient().getUsername()).isEqualTo(client.getUsername());
-    }
-
-    @Test
-    public void updateAccountOne() {
-        Client client = clientService.getClient(1);
-        Account expAccount = new Account(1000, client);
-        Account account = accountService.updateAccount(expAccount);
-        assertThat(account.getBalance()).isEqualTo(expAccount.getBalance());
     }
 
     @Test
