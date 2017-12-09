@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -43,8 +42,7 @@ public class Account implements Serializable {
 
     }
 
-    public Account(double balance,Client client) {
-        this.balance=balance;
+    public Account(Client client) {
         this.client = client;
     }
 

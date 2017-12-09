@@ -1,9 +1,13 @@
 package com.marie.bank;
 
+import com.marie.bank.exception.AmountGreaterThanBalanceException;
+import com.marie.bank.exception.NegativeAmountException;
 import com.marie.bank.model.Account;
-import com.marie.bank.service.ClientService;
 import com.marie.bank.model.Client;
 import com.marie.bank.service.AccountService;
+import com.marie.bank.service.OperationService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,7 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application implements CommandLineRunner {
 
     @Autowired
-    private ClientService clientService;
+    private OperationService operationService;
 
     @Autowired
     private AccountService accountService;
@@ -31,28 +35,29 @@ public class Application implements CommandLineRunner {
     @Transactional
     private void createData() {
 
-        //create clients
-        Client jack = new Client("jackb", "Jack", "Bauer", "123.");
-        Client chloe = new Client("chloeo", "Chloe", "O'Brian", "123.");
-        Client kim = new Client("kimb", "Kim", "Bauer", "123.");
-        Client david = new Client("davidp", "David", "Palmer", "132.");
-        Client michelle = new Client("michelled", "Michelle", "Dessler", "123.");
-       
-       
+        try {
 
-        //create accounts
-        Account accountJack1 = new Account(200, jack);
-        Account accountkim1 = new Account(400, kim);
-        Account accountChloe1 = new Account(300, chloe);
-        accountService.createAccount(accountJack1);
-        accountService.createAccount(accountkim1);
-        accountService.createAccount(accountChloe1);
-        
-        clientService.createClient(david);
-        clientService.createClient(michelle);
-        //create operations
+            //create accounts
+            Account jackAccount = new Account(new Client("Jack", "Bauer"));
+            Account kimAccount = new Account(new Client("Chloe", "O'Brian"));
+            Account chloeAccount = new Account(new Client("Kim", "Bauer"));
+            Account davidAccount = new Account(new Client("David", "Palmer"));
+            Account michelleAccount = new Account(new Client("Michelle", "Dessler"));
+            accountService.createAccount(jackAccount);
+            accountService.createAccount(kimAccount);
+            accountService.createAccount(chloeAccount);
+            accountService.createAccount(davidAccount);
+            accountService.createAccount(michelleAccount);
+            //create operations
+            for (int i = 1; i < 6; i++) {
+                operationService.depositOperation(i, 100*i);
+            }
+            for (int i = 1; i < 6; i++) {
+                operationService.withdrawalOperation(i, 50*i);
+            }
 
-        accountService.depositOperation(1, 200);
-        accountService.depositOperation(2, 200);
+        } catch (NegativeAmountException | AmountGreaterThanBalanceException ex) {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

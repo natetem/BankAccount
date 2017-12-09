@@ -18,65 +18,33 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AccountServiceTest {
-
+    
     @Autowired
     private AccountService accountService;
-
+    
     @Autowired
     private ClientService clientService;
-
+    
     @Test
     public void getAccountOne() {
         Account account = accountService.getAccount(1);
         Assert.assertNotNull(account);
-        assertThat(account.getBalance()).isEqualTo(600);
+        assertThat(account.getBalance()).isEqualTo(50);
         Client client = clientService.getClient(1);
-        assertThat(account.getClient().getUsername()).isEqualTo(client.getUsername());
+        assertThat(account.getClient().getFirstName()).isEqualTo(client.getFirstName());
     }
-
+    
     @Test
     public void findAllAccounts() {
         List<Account> accounts = accountService.findAll();
         assertThat(accounts.size()).isGreaterThan(2);
     }
-
+    
     @Test
-    public void findAccountsByClient() {
-        Client client = clientService.getClient(1);
-        List<Account> accounts = accountService.findAccountsByClient(client);
-        assertThat(accounts.get(0).getClient().getFirstName()).isEqualTo("Jack");
-    }
-
-    @Test
-    public void deleteAccountTwo() {
-        accountService.deleteAccount(2);
-        Account account = accountService.getAccount(2);
-        Assert.assertNull(account);
-        Client client = clientService.getClient(1);
-        Assert.assertNotNull(client);
-    }
-
-    @Test
-    public void createAccountFour() {
-        Client client = new Client("natetem", "Marie", "Natete", "123.");
-        Account expAccount = new Account(800, client);
+    public void createAccount() {
+        Account expAccount = new Account(new Client("Marie", "Natete"));
         Account account = accountService.createAccount(expAccount);
-        assertThat(account.getClient().getUsername()).isEqualTo(client.getUsername());
+        assertThat(account.getClient().getLastName()).isEqualTo(expAccount.getClient().getLastName());
     }
-
-    @Test
-    public void depositOnAccountOne() {
-        Account expAccount = accountService.getAccount(1);
-        Account account = accountService.depositOperation(1, 200);
-        assertThat(account.getBalance()).isGreaterThan(expAccount.getBalance());
-    }
-
-    @Test
-    public void withdrawalOnAccountOne() {
-        Account expAccount = accountService.getAccount(2);
-        Account account = accountService.withdrawalOperation(2, 200);
-        assertThat(account.getBalance()).isLessThan(expAccount.getBalance());
-
-    }
-
+    
 }

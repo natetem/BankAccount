@@ -18,19 +18,16 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String username;
     private String firstName;
     private String lastName;
-    private String password;
 
     public Client() {
     }
 
-    public Client(String username, String firstName, String lastName, String password) {
-        this.username = username;
+    public Client(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
+
     }
 
     public int getId() {
@@ -57,37 +54,19 @@ public class Client implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
         return String.format(
-                "Client[id=%d, username='%s',firstName='%s', lastName='%s', password='%s']",
-                id, username, firstName, lastName, password);
+                "Client[id=%d,firstName='%s', lastName='%s']",
+                id, firstName, lastName);
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 67 * hash + this.id;
-        hash = 67 * hash + Objects.hashCode(this.username);
         hash = 67 * hash + Objects.hashCode(this.firstName);
         hash = 67 * hash + Objects.hashCode(this.lastName);
-        hash = 67 * hash + Objects.hashCode(this.password);
         return hash;
     }
 
@@ -106,16 +85,14 @@ public class Client implements Serializable {
         if (this.id != other.id) {
             return false;
         }
-        if (!Objects.equals(this.username, other.username)) {
-            return false;
-        }
         if (!Objects.equals(this.firstName, other.firstName)) {
             return false;
         }
         if (!Objects.equals(this.lastName, other.lastName)) {
             return false;
         }
-        return Objects.equals(this.password, other.password);
+        return true;
     }
+    
 
 }

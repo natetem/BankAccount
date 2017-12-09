@@ -2,8 +2,6 @@ package com.marie.bank.model;
 
 import com.marie.bank.exception.AmountGreaterThanBalanceException;
 import com.marie.bank.exception.NegativeAmountException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -15,19 +13,17 @@ import org.junit.Before;
  */
 public class AccountTest {
 
-    private Client client;
     private Account account;
 
     @Before
     public void setUp() {
-        client = new Client("jackb", "Jack", "Bauer", "123.");
-        account = new Account(200, client);
+        account = new Account(new Client("Jack", "Bauer"));
     }
 
     @Test
     public void depositPositiveAmountOnAccount() throws NegativeAmountException {
         account.deposit(100);
-        assertThat(account.getBalance()).isEqualTo(300);
+        assertThat(account.getBalance()).isEqualTo(100);
     }
 
     @Test
@@ -44,6 +40,7 @@ public class AccountTest {
 
     @Test
     public void withdrawalPositiveAmountOnAccount() throws NegativeAmountException, AmountGreaterThanBalanceException {
+        account.deposit(200);
         account.withdrawal(100);
         assertThat(account.getBalance()).isEqualTo(100);
     }

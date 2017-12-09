@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,11 +25,11 @@ public class Operation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    private String type;
-    
-     private Date date; 
-    
+    @Enumerated(EnumType.STRING)
+    private TypeOperation type;
+
+    private Date date;
+
     private double balance;
 
     private double amount;
@@ -39,16 +41,14 @@ public class Operation implements Serializable {
     public Operation() {
     }
 
-    public Operation(String type, Date date,double balance, double amount, Account account) {
+    public Operation(TypeOperation type, Date date, double balance, double amount, Account account) {
         this.type = type;
         this.date = date;
         this.balance = balance;
         this.amount = amount;
-        this.account=account;
- 
+        this.account = account;
+
     }
-
-
 
     public void setId(Long id) {
         this.id = id;
@@ -56,10 +56,6 @@ public class Operation implements Serializable {
 
     public void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public Long getId() {
@@ -74,7 +70,7 @@ public class Operation implements Serializable {
         return account;
     }
 
-    public String getType() {
+    public TypeOperation getType() {
         return type;
     }
 
@@ -85,8 +81,6 @@ public class Operation implements Serializable {
     public double getBalance() {
         return balance;
     }
-    
-    
 
     @Override
     public String toString() {
@@ -128,5 +122,4 @@ public class Operation implements Serializable {
         return true;
     }
 
-    
 }
