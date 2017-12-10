@@ -14,6 +14,7 @@ export class AccountDetailComponent implements OnInit {
   account: Account;
   accountForm: FormGroup;
   operation: string;
+  message: string;
 
   constructor(private accountService: AccountService,
     private route: ActivatedRoute) { }
@@ -33,6 +34,7 @@ export class AccountDetailComponent implements OnInit {
   }
 
   deposit(): void {
+    this.message = '';
     this.operation = 'Deposit';
     this.accountForm = new FormGroup({
       amount: new FormControl('', [
@@ -42,6 +44,7 @@ export class AccountDetailComponent implements OnInit {
   }
 
   withdrawal(): void {
+    this.message = '';
     this.operation = 'Withdrawal';
     this.accountForm = new FormGroup({
       amount: new FormControl('', [
@@ -50,16 +53,20 @@ export class AccountDetailComponent implements OnInit {
     });
   }
 
-  historical(): void { this.operation = 'Historical'; }
+  historical(): void { 
+    this.message = '';
+    this.operation = 'Historical'; }
 
 
   onSubmit() {
     if (this.operation === 'Deposit') {
       this.accountService.depositAccount(this.account.id, this.accountForm.controls['amount'].value).subscribe();
+      this.message = 'Operation Deposit has been successfully Done';
     }
 
     if (this.operation === 'Withdrawal') {
       this.accountService.withdrawalAccount(this.account.id, this.accountForm.controls['amount'].value).subscribe();
+      this.message = 'Operation Withdrawal has been successfully Done';
     }
     this.accountForm.reset();
     this.operation = '';
