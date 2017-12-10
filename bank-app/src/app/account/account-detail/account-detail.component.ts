@@ -13,7 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AccountDetailComponent implements OnInit {
   @Input() account: Account;
   accountForm: FormGroup;
-
+  operation: string;
 
   constructor(private accountService: AccountService,
     private route: ActivatedRoute,
@@ -21,34 +21,40 @@ export class AccountDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getAccount();
-    this.accountForm = new FormGroup({
-      amount: new FormControl('', [
-        Validators.required,
-        Validators.min(0), ]),
-      operation: new FormControl('', Validators.required)
-    });
+
   }
   getAccount(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.accountService.findById(id).subscribe(account => this.account = account);
   }
 
-  onOperationChange(): void {
-    if (this.accountForm.controls['operation'].value === 'Withdrawal') {
-
-      this.accountForm.controls['amount'].setValidators([Validators.required, Validators.min(0), Validators.max(this.account.balance), ]);
-    } else {
-
-      this.accountForm.controls['amount'].setValidators([Validators.required, Validators.min(0), ]);
-    }
-
+  deposit(): void {
+    this.operation = 'Deposit';
+    this.accountForm = new FormGroup({
+      amount: new FormControl('', [
+        Validators.required,
+        Validators.min(0)])
+    });
   }
+
+  withdrawal(): void {
+    this.operation = 'Withdrawal';
+    this.accountForm = new FormGroup({
+      amount: new FormControl('', [
+        Validators.required,
+        Validators.min(0), Validators.max(this.account.balance)])
+    });
+  }
+
+  historical(): void { this.operation = 'Historical'; }
+
+
   onSubmit() {
-    if (this.accountForm.controls['operation'].value === 'Deposit') {
+    if (this.operation === 'Deposit') {
       this.accountService.depositAccount(this.account.id, this.accountForm.controls['amount'].value).subscribe();
     }
-    // tslint:disable-next-line:one-line
-    else {
+
+    if (this.operation === 'Withdrawal') {
       this.accountService.withdrawalAccount(this.account.id, this.accountForm.controls['amount'].value).subscribe();
     }
     this.accountForm.reset();

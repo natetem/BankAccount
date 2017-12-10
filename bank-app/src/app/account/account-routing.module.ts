@@ -4,6 +4,7 @@ import { AccountListComponent } from './account-list/account-list.component';
 import { AccountDetailComponent } from './account-detail/account-detail.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/account', pathMatch: 'full' },
   { path: 'account', component: AccountListComponent },
   { path: 'account/detail/:id', component: AccountDetailComponent }
 ];
