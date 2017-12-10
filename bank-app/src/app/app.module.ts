@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountModule } from './account/account.module';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { HttpModule } from '@angular/http';
     BrowserModule,
     AppRoutingModule,
     HttpModule,
+    HttpClientModule,
     AccountModule
   ],
   providers: [],

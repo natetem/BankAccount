@@ -1,31 +1,35 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Account } from '../account';
-import { AccountService } from '../account.service';
-import { ActivatedRoute, Router } from '@angular/router';
+
+import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-account-detail',
   templateUrl: './account-detail.component.html',
-  styleUrls: ['./account-detail.component.css'],
-  providers: [AccountService]
+  styleUrls: ['./account-detail.component.css']
 })
 export class AccountDetailComponent implements OnInit {
-  @Input() account: Account;
+  account: Account;
   accountForm: FormGroup;
   operation: string;
 
   constructor(private accountService: AccountService,
-    private route: ActivatedRoute,
-    private router: Router) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getAccount();
+    setInterval(() => {
+      this.getAccount();
+    }, 1000);
+
 
   }
   getAccount(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.accountService.findById(id).subscribe(account => this.account = account);
+    this.accountService.findById(id)
+      .subscribe(account => this.account = account);
+
   }
 
   deposit(): void {
@@ -58,6 +62,7 @@ export class AccountDetailComponent implements OnInit {
       this.accountService.withdrawalAccount(this.account.id, this.accountForm.controls['amount'].value).subscribe();
     }
     this.accountForm.reset();
-    this.router.navigate(['/account']);
+    this.operation = '';
+
   }
 }
