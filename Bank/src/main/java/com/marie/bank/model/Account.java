@@ -1,123 +1,22 @@
 package com.marie.bank.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.marie.bank.exception.AmountGreaterThanBalanceException;
-import com.marie.bank.exception.NegativeAmountException;
-import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
- * This class Manage the Bank Accounts
+ * This class Manage the Accounts
  *
  * @author <a href="mailto:mariejeanne.natete@gmail.com">Marie Jeanne NATETE</a>
  */
-@Entity
-public class Account implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
+@Data
+@RequiredArgsConstructor
+public class Account {
+    private final int id;
+    @NonNull 
     private double balance;
-    @JsonManagedReference
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id",unique= true, nullable=true, insertable=true, updatable=true)
-    private Client client;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Operation> operations;
-
-    public Account() {
-
-    }
-
-    public Account(Client client) {
-        this.client = client;
-    }
-
-    public void deposit(double amount) throws NegativeAmountException {
-        if (amount < 0) {
-            throw new NegativeAmountException("Amount must be positive");
-        }
-        this.balance += amount;
-    }
-
-    public void withdrawal(double amount) throws NegativeAmountException, AmountGreaterThanBalanceException {
-        if (amount < 0) {
-            throw new NegativeAmountException("Amount must be positive");
-        } else if (amount > this.balance) {
-            throw new AmountGreaterThanBalanceException("Amount can not be greater than the balance ");
-        }
-
-        this.balance -= amount;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public List<Operation> getOperations() {
-        return operations;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "Account[id=%d, balance=%s, client=%s,operations=%s]",
-                id, balance, client, operations);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + (int) (Double.doubleToLongBits(this.balance) ^ (Double.doubleToLongBits(this.balance) >>> 32));
-        hash = 71 * hash + Objects.hashCode(this.client);
-        hash = 71 * hash + Objects.hashCode(this.operations);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Account other = (Account) obj;
-        if (Double.doubleToLongBits(this.balance) != Double.doubleToLongBits(other.balance)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.client, other.client)) {
-            return false;
-        }
-        return Objects.equals(this.operations, other.operations);
-    }
-
+    private final  Client client;
+    private List<Operation> operations;   
+    
 }

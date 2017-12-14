@@ -1,4 +1,4 @@
-package com.marie.bank.model;
+package com.marie.bank.enumeration;
 
 /**
  *

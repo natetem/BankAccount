@@ -1,27 +1,31 @@
 package com.marie.bank.service;
 
+import com.marie.bank.exception.AmountGreaterThanBalanceException;
+import com.marie.bank.exception.NegativeAmountException;
 import com.marie.bank.model.Account;
-import com.marie.bank.repository.AccountRepository;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.marie.bank.model.Operation;
 
 /**
  *
  * @author marie
  */
-@Service
 public class AccountService {
-    @Autowired
-    private AccountRepository accountRepository;
-    
-    public Account getAccount(int id) {
-        return accountRepository.findOne(id);
+
+    public void deposit(Account account, Operation operation) throws NegativeAmountException {
+        if (operation.getAmount() < 0) {
+            throw new NegativeAmountException("Amount must be positive");
+        }
+        account.setBalance(account.getBalance() + operation.getAmount());
     }
-    public List<Account> findAll() {
-        return accountRepository.findAll();
+
+    public void withdrawal(Account account, Operation operation) throws AmountGreaterThanBalanceException, NegativeAmountException {
+        if (operation.getAmount() < 0) {
+            throw new NegativeAmountException("Amount must be positive");
+        } else if (operation.getAmount() > account.getBalance()) {
+            throw new AmountGreaterThanBalanceException("Amount can not be greater than the balance ");
+        }
+
+        account.setBalance(account.getBalance() - operation.getAmount());
     }
-    public Account createAccount(Account account) {
-        return accountRepository.save(account);
-    }
+
 }
