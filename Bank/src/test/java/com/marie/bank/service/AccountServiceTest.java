@@ -7,6 +7,7 @@ import com.marie.bank.model.Account;
 import com.marie.bank.model.Client;
 import com.marie.bank.model.Operation;
 import java.time.LocalDate;
+import org.hamcrest.CoreMatchers;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -75,6 +76,14 @@ public class AccountServiceTest {
         thrown.expect(AmountGreaterThanBalanceException.class);
         thrown.expectMessage(startsWith("Amount can not be greater than"));
         accountService.withdrawal(account, operationWithdrawal3);
+    }
+
+    @Test
+    public void should_return_the() throws NegativeAmountException {
+        accountService.deposit(account, operationDeposit1);
+        String s = accountService.historical(account);
+        assertThat(s, CoreMatchers.containsString("Deposit"));
+
     }
 
 }

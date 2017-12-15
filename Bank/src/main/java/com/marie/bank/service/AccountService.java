@@ -4,6 +4,8 @@ import com.marie.bank.exception.AmountGreaterThanBalanceException;
 import com.marie.bank.exception.NegativeAmountException;
 import com.marie.bank.model.Account;
 import com.marie.bank.model.Operation;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -16,6 +18,7 @@ public class AccountService {
             throw new NegativeAmountException("Amount must be positive");
         }
         account.setBalance(account.getBalance() + operation.getAmount());
+        account.getOperations().add(operation);
     }
 
     public void withdrawal(Account account, Operation operation) throws AmountGreaterThanBalanceException, NegativeAmountException {
@@ -26,6 +29,13 @@ public class AccountService {
         }
 
         account.setBalance(account.getBalance() - operation.getAmount());
+        account.getOperations().add(operation);
+    }
+
+    public String historical(Account account) {
+
+        return account.getOperations().stream().map(Operation::toString).collect(Collectors.joining("\n"));
+
     }
 
 }
