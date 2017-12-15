@@ -15,14 +15,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Account {
 
-    private final static AtomicInteger NB_ACCOUNTS = new AtomicInteger(0);
+    public final static AtomicInteger NUMBER_OF_ACCOUNTS = new AtomicInteger(1);
     private final int id;
     private double balance;
     private final Client client;
     private List<Operation> operations;
 
     public Account(Client client) {
-        this.id = NB_ACCOUNTS.getAndIncrement();
+        this.id = NUMBER_OF_ACCOUNTS.getAndIncrement();
         this.client = client;
         this.operations = new ArrayList();
     }

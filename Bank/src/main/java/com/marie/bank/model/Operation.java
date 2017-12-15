@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Operation {
 
-    private final TypeOperation type;
+    private TypeOperation type;
     private final LocalDate date;
     private double balance;
     private final double amount;
