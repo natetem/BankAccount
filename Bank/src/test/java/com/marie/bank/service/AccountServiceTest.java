@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Optional;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.Before;
@@ -52,6 +53,13 @@ public class AccountServiceTest {
         assertThat(account.getBalance(), equalTo(new BigDecimal(100)));
     }
 
+    @Test
+    public void should_return_zero_when_deposit_but_operation_is_null() {
+        Operation operation = null;
+        BigDecimal balance = accountService.deposit(account, operation);
+        assertThat(BigDecimal.ZERO, equalTo(balance));
+    }
+
     @Test(expected = NegativeAmountException.class)
     public void should_throw_Exception_when_deposit_negative_amount() {
         Operation operation = new Operation(LocalDate.of(2017, Month.JANUARY, 01), new BigDecimal(-100));
@@ -82,7 +90,7 @@ public class AccountServiceTest {
         accountService.withdrawal(account, operation);
     }
 
-    public void should_return_two_operations_when_histotical_account() {
+    public void should_return_two_operations_when_histotical_of_account() {
 
         Operation operation1 = new Operation(LocalDate.of(2017, Month.JANUARY, 01), new BigDecimal(200));
         Operation operation2 = new Operation(LocalDate.of(2017, Month.JANUARY, 01), new BigDecimal(100));
@@ -94,5 +102,7 @@ public class AccountServiceTest {
         assertThat(operations.get(1).getBalance(), equalTo(balance2));
         assertThat(operations.get(1).getType(), equalTo(TypeOperation.Withdrawal));
     }
+    
+
 
 }
