@@ -1,6 +1,7 @@
 package com.marie.bank.model;
 
 import com.marie.bank.enumeration.TypeOperation;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class Operation {
 
     private TypeOperation type;
     private final LocalDate date;
-    private double balance;
-    private final double amount;
+    private BigDecimal balance;
+    private final BigDecimal amount;
 
 }

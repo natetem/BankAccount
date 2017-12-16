@@ -6,7 +6,9 @@ import com.marie.bank.exception.NegativeAmountException;
 import com.marie.bank.exception.NotAllowedOperationException;
 import com.marie.bank.model.Account;
 import com.marie.bank.model.Operation;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -14,32 +16,32 @@ import java.util.List;
  */
 public interface AccountService {
 
-    public final static double AUTHORISED_AMOUNT_DEPOSIT = 10000;
-    public final static double AUTHORISED_AMOUNT_WITHDRAWAL = 500;
+    public final static BigDecimal AUTHORISED_AMOUNT_DEPOSIT = new BigDecimal(10000);
+    public final static BigDecimal AUTHORISED_AMOUNT_WITHDRAWAL = new BigDecimal(500);
 
-    public default double deposit(Account account, Operation operation) {
-        if (operation.getAmount() < 0) {
+    public default BigDecimal deposit(Account account, Operation operation) {
+        if (operation.getAmount().compareTo(new BigDecimal("0.00")) == -1) {
             throw new NegativeAmountException("Amount must be positive");
-        } else if (operation.getAmount() > AUTHORISED_AMOUNT_DEPOSIT) {
+        } else if (operation.getAmount().compareTo(AUTHORISED_AMOUNT_DEPOSIT) == 1) {
             throw new NotAllowedOperationException("Amount is greater than authorised amount on deposit");
         }
-        account.setBalance(account.getBalance() + operation.getAmount());
+        account.setBalance(account.getBalance().add(operation.getAmount()));
         operation.setBalance(account.getBalance());
         operation.setType(TypeOperation.Deposit);
         account.getOperations().add(operation);
         return account.getBalance();
     }
 
-    public default double withdrawal(Account account, Operation operation) {
-        if (operation.getAmount() < 0) {
+    public default BigDecimal withdrawal(Account account, Operation operation) {
+        if (operation.getAmount().compareTo(new BigDecimal("0.00")) == -1) {
             throw new NegativeAmountException("Amount must be positive");
-        } else if (operation.getAmount() > AUTHORISED_AMOUNT_WITHDRAWAL) {
+        } else if (operation.getAmount().compareTo(AUTHORISED_AMOUNT_WITHDRAWAL) == 1) {
             throw new NotAllowedOperationException("Amount is greater than authorised amount on withdrawal");
-        } else if (operation.getAmount() > account.getBalance()) {
+        } else if (operation.getAmount().compareTo(account.getBalance()) == 1) {
             throw new AmountGreaterThanBalanceException("Amount can not be greater than the balance ");
         }
 
-        account.setBalance(account.getBalance() - operation.getAmount());
+        account.setBalance(account.getBalance().subtract(operation.getAmount()));
         operation.setBalance(account.getBalance());
         operation.setType(TypeOperation.Withdrawal);
         account.getOperations().add(operation);

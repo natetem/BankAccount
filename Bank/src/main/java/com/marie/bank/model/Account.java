@@ -1,10 +1,9 @@
 package com.marie.bank.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 /**
  * This class Manage the Accounts
@@ -14,17 +13,13 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class Account {
 
-    private double balance;
+    private BigDecimal balance;
     private final Client client;
     private List<Operation> operations;
 
-    public Account(Client client) {
+    public Account(Client client, BigDecimal balance) {
         this.client = client;
         this.operations = new ArrayList();
-    }
-
-    public Account(Client client, double balance) {
-        this(client);
         this.balance = balance;
 
     }
