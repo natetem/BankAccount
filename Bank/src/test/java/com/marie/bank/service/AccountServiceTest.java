@@ -39,8 +39,8 @@ public class AccountServiceTest {
     @Test
     public void should_return_threeHundred_when_balance_is_twoHundred_and_deposit_amount_is_oneHundred() {
         Operation operation = new Operation(LocalDate.of(2017, Month.FEBRUARY, 01), new BigDecimal(100));
-        BigDecimal balance = accountService.deposit(account, operation);
-        assertThat(account.getBalance(), equalTo(balance));
+        Optional<BigDecimal> balance = accountService.deposit(account, operation);
+        assertThat(account.getBalance(), equalTo(balance.get()));
         assertThat(account.getBalance(), equalTo(new BigDecimal(300)));
 
     }
@@ -48,16 +48,16 @@ public class AccountServiceTest {
     @Test
     public void should_return_oneHundred_when_balance_is_twoHundred_and_windrawal_amount_is_oneHundred() {
         Operation operation = new Operation(LocalDate.of(2017, Month.JANUARY, 01), new BigDecimal(100));
-        BigDecimal balance = accountService.withdrawal(account, operation);
-        assertThat(account.getBalance(), equalTo(balance));
+        Optional<BigDecimal> balance = accountService.withdrawal(account, operation);
+        assertThat(account.getBalance(), equalTo(balance.get()));
         assertThat(account.getBalance(), equalTo(new BigDecimal(100)));
     }
 
     @Test
-    public void should_return_zero_when_deposit_but_operation_is_null() {
+    public void should_return_emptyOptional_when_deposit_but_operation_is_null() {
         Operation operation = null;
-        BigDecimal balance = accountService.deposit(account, operation);
-        assertThat(BigDecimal.ZERO, equalTo(balance));
+        Optional<BigDecimal> balance = accountService.deposit(account, operation);
+        assertThat(Optional.empty(), equalTo(balance));
     }
 
     @Test(expected = NegativeAmountException.class)
@@ -94,15 +94,14 @@ public class AccountServiceTest {
 
         Operation operation1 = new Operation(LocalDate.of(2017, Month.JANUARY, 01), new BigDecimal(200));
         Operation operation2 = new Operation(LocalDate.of(2017, Month.JANUARY, 01), new BigDecimal(100));
-        BigDecimal balance1 = accountService.deposit(account, operation1);
-        BigDecimal balance2 = accountService.withdrawal(account, operation2);
-        List<Operation> operations = accountService.historical(account);
-        assertThat(operations.size(), equalTo(2));
-        assertThat(operations.get(0).getBalance(), equalTo(balance1));
-        assertThat(operations.get(1).getBalance(), equalTo(balance2));
-        assertThat(operations.get(1).getType(), equalTo(TypeOperation.Withdrawal));
-    }
-    
+        Optional<BigDecimal> balance1 = accountService.deposit(account, operation1);
+        Optional<BigDecimal> balance2 = accountService.withdrawal(account, operation2);
+        Optional<List<Operation>> operations = accountService.historical(account);
 
+        assertThat(operations.get().size(), equalTo(2));
+        assertThat(operations.get().get(0).getBalance(), equalTo(balance1.get()));
+        assertThat(operations.get().get(1).getBalance(), equalTo(balance2.get()));
+        assertThat(operations.get().get(1).getType(), equalTo(TypeOperation.Withdrawal));
+    }
 
 }

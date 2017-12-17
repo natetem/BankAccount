@@ -7,7 +7,6 @@ import com.marie.bank.exception.NotAllowedOperationException;
 import com.marie.bank.model.Account;
 import com.marie.bank.model.Operation;
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +19,7 @@ public interface AccountService {
     public final static BigDecimal AUTHORISED_AMOUNT_DEPOSIT = new BigDecimal(10000);
     public final static BigDecimal AUTHORISED_AMOUNT_WITHDRAWAL = new BigDecimal(500);
 
-    public default BigDecimal deposit(Account account, Operation operation) {
+    public default Optional<BigDecimal> deposit(Account account, Operation operation) {
         if (Optional.ofNullable(account).isPresent() && Optional.ofNullable(operation).isPresent()) {
             if (operation.getAmount().compareTo(BigDecimal.ZERO) == -1) {
                 throw new NegativeAmountException("Amount must be positive");
@@ -31,13 +30,13 @@ public interface AccountService {
             operation.setBalance(account.getBalance());
             operation.setType(TypeOperation.Deposit);
             account.getOperations().add(operation);
-            return account.getBalance();
+            return Optional.of(account.getBalance());
         } else {
-            return BigDecimal.ZERO;
+            return Optional.empty();
         }
     }
 
-    public default BigDecimal withdrawal(Account account, Operation operation) {
+    public default Optional<BigDecimal> withdrawal(Account account, Operation operation) {
         if (Optional.ofNullable(account).isPresent() && Optional.ofNullable(operation).isPresent()) {
             if (operation.getAmount().compareTo(BigDecimal.ZERO) == -1) {
                 throw new NegativeAmountException("Amount must be positive");
@@ -51,18 +50,18 @@ public interface AccountService {
             operation.setBalance(account.getBalance());
             operation.setType(TypeOperation.Withdrawal);
             account.getOperations().add(operation);
-            return account.getBalance();
+            return Optional.of( account.getBalance());
         } else {
-            return BigDecimal.ZERO;
+            return Optional.empty();
 
         }
     }
 
-    public default List<Operation> historical(Account account) {
+    public default Optional<List<Operation>> historical(Account account) {
         if (Optional.ofNullable(account).isPresent()) {
-            return account.getOperations();
+            return Optional.of(account.getOperations());
         } else {
-            return Collections.EMPTY_LIST;
+            return Optional.empty();
         }
     }
 }
