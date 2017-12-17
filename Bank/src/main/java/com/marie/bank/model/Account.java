@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 /**
- * This class Manage the Accounts
+ * This class manages the accounts
  *
  * @author <a href="mailto:mariejeanne.natete@gmail.com">Marie Jeanne NATETE</a>
  */

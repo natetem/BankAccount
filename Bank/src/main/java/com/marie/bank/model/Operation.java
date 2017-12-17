@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
- * This class Manage the Operations on account
+ * This class manages the operations 
  *
  * @author <a href="mailto:mariejeanne.natete@gmail.com">Marie Jeanne NATETE</a>
  */

@@ -10,6 +10,7 @@ import com.marie.bank.model.Operation;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -18,8 +19,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * This class test the account service 
  *
- * @author marie
+ * @author <a href="mailto:mariejeanne.natete@gmail.com">Marie Jeanne NATETE</a>
  */
 public class AccountServiceTest {
 
@@ -38,8 +40,11 @@ public class AccountServiceTest {
 
     @Test
     public void should_return_threeHundred_when_balance_is_twoHundred_and_deposit_amount_is_oneHundred() {
+        //given 
         Operation operation = new Operation(LocalDate.of(2017, Month.FEBRUARY, 01), new BigDecimal(100));
+        //when 
         Optional<BigDecimal> balance = accountService.deposit(account, operation);
+        //then
         assertThat(account.getBalance(), equalTo(balance.get()));
         assertThat(account.getBalance(), equalTo(new BigDecimal(300)));
 
@@ -47,16 +52,32 @@ public class AccountServiceTest {
 
     @Test
     public void should_return_oneHundred_when_balance_is_twoHundred_and_windrawal_amount_is_oneHundred() {
+        //given
         Operation operation = new Operation(LocalDate.of(2017, Month.JANUARY, 01), new BigDecimal(100));
+        //when
         Optional<BigDecimal> balance = accountService.withdrawal(account, operation);
+        //then
         assertThat(account.getBalance(), equalTo(balance.get()));
         assertThat(account.getBalance(), equalTo(new BigDecimal(100)));
     }
 
     @Test
-    public void should_return_emptyOptional_when_deposit_but_operation_is_null() {
+    public void should_return_empty_when_deposit_and_account_isnot_null_but_operation_is_null() {
+        //given
         Operation operation = null;
+        //when
         Optional<BigDecimal> balance = accountService.deposit(account, operation);
+        //then
+        assertThat(Optional.empty(), equalTo(balance));
+    }
+    
+     @Test
+    public void should_return_empty_when_withdrawal_and_account_isnot_null_but_operation_is_null() {
+        //given
+        Operation operation = null;
+        //when
+        Optional<BigDecimal> balance = accountService.withdrawal(account, operation);
+        //then
         assertThat(Optional.empty(), equalTo(balance));
     }
 
@@ -91,17 +112,29 @@ public class AccountServiceTest {
     }
 
     public void should_return_two_operations_when_histotical_of_account() {
-
+        //given
         Operation operation1 = new Operation(LocalDate.of(2017, Month.JANUARY, 01), new BigDecimal(200));
         Operation operation2 = new Operation(LocalDate.of(2017, Month.JANUARY, 01), new BigDecimal(100));
         Optional<BigDecimal> balance1 = accountService.deposit(account, operation1);
         Optional<BigDecimal> balance2 = accountService.withdrawal(account, operation2);
-        Optional<List<Operation>> operations = accountService.historical(account);
+        // when
+        List<Operation> operations = accountService.historical(account);
 
-        assertThat(operations.get().size(), equalTo(2));
-        assertThat(operations.get().get(0).getBalance(), equalTo(balance1.get()));
-        assertThat(operations.get().get(1).getBalance(), equalTo(balance2.get()));
-        assertThat(operations.get().get(1).getType(), equalTo(TypeOperation.Withdrawal));
+        //then
+        assertThat(operations.size(), equalTo(2));
+        assertThat(operations.get(0).getBalance(), equalTo(balance1.get()));
+        assertThat(operations.get(1).getBalance(), equalTo(balance2.get()));
+        assertThat(operations.get(1).getType(), equalTo(TypeOperation.Withdrawal));
+    }
+    
+      @Test
+    public void should_return_empty_list_when_historical_and_account_is_null() {
+        //given
+        Account accountLocal = null;
+        // when
+        List<Operation> operations = accountService.historical(accountLocal);
+        //then
+        assertThat(operations, equalTo(Collections.EMPTY_LIST));
     }
 
 }

@@ -3,7 +3,7 @@ package com.marie.bank.model;
 import lombok.Data;
 
 /**
- * This class Manage the clients
+ * This class manages the clients
  *
  * @author <a href="mailto:mariejeanne.natete@gmail.com">Marie Jeanne NATETE</a>
  */

@@ -2,8 +2,9 @@
 package com.marie.bank.service;
 
 /**
+ * This class manages the service on account 
  *
- * @author marie
+ * @author <a href="mailto:mariejeanne.natete@gmail.com">Marie Jeanne NATETE</a>
  */
 public class AccountServiceImpl implements AccountService{
     
